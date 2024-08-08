@@ -1,5 +1,6 @@
-import data.extracted
 import pandas as pd
+import etl.extract
+
 
 # Cleaning the Data
 
