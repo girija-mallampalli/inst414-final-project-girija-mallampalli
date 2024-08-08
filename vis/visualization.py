@@ -1,6 +1,7 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
-import data.outputs
+import analysis.model
+import analysis.evaluation
 
 # Correlation matrix
 correlation_matrix = hosp_df_cleaned.corr()
