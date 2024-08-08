@@ -1,5 +1,5 @@
 import pandas as pd
-import data.extracted
+import etl.extract
 import etl.transform
 
 # Load cleaned data into a new CSV
