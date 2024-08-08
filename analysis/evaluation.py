@@ -18,7 +18,7 @@ print(f'Random Forest MSE: {mse_rf}, R2: {r2_rf}')
 
 
 # Ensure the directory exists
-os.makedirs('data/evaluation', exist_ok=True)
+os.makedirs('data/outputs', exist_ok=True)
 
 # Save metrics to CSV
 metrics_df = pd.DataFrame({
@@ -26,7 +26,7 @@ metrics_df = pd.DataFrame({
     'MSE': [mse_linear, mse_rf],
     'R2': [r2_linear, r2_rf]
 })
-metrics_df.to_csv('data/evaluation/metrics.csv', index=False)
+metrics_df.to_csv('data/outputs/metrics.csv', index=False)
 
 # Plotting and saving charts
 plt.figure(figsize=(10, 5))
@@ -47,5 +47,5 @@ plt.ylabel('R2')
 
 # Save the plot
 plt.tight_layout()
-plt.savefig('data/evaluation/model_performance.png')
+plt.savefig('data/outputs/model_performance.png')
 plt.show()
