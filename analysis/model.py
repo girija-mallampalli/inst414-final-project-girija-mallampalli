@@ -3,39 +3,37 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
-import etl.load
+from data import loaded
 
 
-hosp_df_cleaned = pd.read_csv('Hospital_General_Ratings_Cleaned.csv')
+# Setting up logging
+logging.basicConfig(filename='data/logs/model.log', level=logging.DEBUG, 
+                    format='%(asctime)s %(message)s')
 
-# Initialize the label encoder
-label_encoder = LabelEncoder()
+def model():
+    try:
+        logging.info('Started model training')
+        hosp_df_cleaned = pd.read_csv('data/loaded/hosp_df_cleaned.csv')
+        
+        features = hosp_df_cleaned.drop(columns=['State'])
+        target = hosp_df_cleaned['State']
 
-# List of columns to encode
-columns_to_encode = ['Effectiveness of care national comparison', 
-                      'Readmission national comparison', 
-                      'Timeliness of care national comparison', 
-                      'Efficient use of medical imaging national comparison', 
-                      'Patient experience national comparison']
+        X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
 
-# Loop through each column and apply label encoding
-for column in columns_to_encode:
-    if column in hosp_df_cleaned.columns:
-        hosp_df_cleaned[column] = label_encoder.fit_transform(hosp_df_cleaned[column].astype(str))
+        # Random Forest Model
+        rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
+        rf_model.fit(X_train, y_train)
+        y_pred_rf = rf_model.predict(X_test)
 
+        logging.info('Model training completed successfully')
 
-# Define features and target variable
-X = hosp_df_cleaned[['Effectiveness of care national comparison', 
-                     'Readmission national comparison',
-                     'Timeliness of care national comparison',
-                     'Efficient use of medical imaging national comparison']]
-y = hosp_df_cleaned['Patient experience national comparison']
+        # Save the model predictions
+        os.makedirs('data/outputs', exist_ok=True)
+        pd.DataFrame({'y_test': y_test, 'y_pred_rf': y_pred_rf}).to_csv('data/outputs/rf_predictions.csv', index=False)
+        logging.info('Model predictions saved successfully')
 
-# Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Random Forest Regressor model
-rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
-rf_model.fit(X_train, y_train)
-y_pred_rf = rf_model.predict(X_test)
+        return rf_model, y_test, y_pred_rf
+    except Exception as e:
+        logging.error(f'Error during model training: {e}')
+        raise
 
