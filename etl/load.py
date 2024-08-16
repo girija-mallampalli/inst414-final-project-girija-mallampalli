@@ -1,7 +1,14 @@
+import os
+import logging
 import pandas as pd
-import etl.extract
-import etl.transform
+from etl import extract, transform
 
-# Load cleaned data into a new CSV
-hosp_df_cleaned.to_csv('Hospital_General_Ratings_Cleaned.csv', index=False)
-
+def load(hosp_df_cleaned):
+    try:
+        logging.info('Started data loading')
+        os.makedirs('data/cleaned', exist_ok=True)
+        hosp_df_cleaned.to_csv('data/hosp_df_cleaned.csv', index=False)
+        logging.info('Data loading completed successfully')
+    except Exception as e:
+        logging.error(f'Error during data loading: {e}')
+        raise
