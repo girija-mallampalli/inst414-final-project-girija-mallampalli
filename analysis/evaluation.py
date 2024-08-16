@@ -2,52 +2,28 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error, r2_score
-import analysis.model
+from data import outputs
 
+# Setting up logging
+logging.basicConfig(filename='data/logs/evaluate.log', level=logging.DEBUG, 
+                    format='%(asctime)s %(message)s')
 
-# Random Forest Regressor Model Evaluation:
-mse_rf = mean_squared_error(y_test, y_pred_rf)
-r2_rf = r2_score(y_test, y_pred_rf)
+def evaluate():
+    try:
+        logging.info('Started model evaluation')
+        predictions = pd.read_csv('data/model/rf_predictions.csv')
 
-print(f'Random Forest MSE: {mse_rf}, R2: {r2_rf}')
+        mse_rf = mean_squared_error(predictions['y_test'], predictions['y_pred_rf'])
+        r2_rf = r2_score(predictions['y_test'], predictions['y_pred_rf'])
 
+        logging.info('Model evaluation completed successfully')
 
-# Ensure the directory exists
-os.makedirs('data/outputs', exist_ok=True)
+        # Save the evaluation metrics
+        os.makedirs('data/outputs', exist_ok=True)
+        pd.DataFrame({'MSE': [mse_rf], 'R2': [r2_rf]}).to_csv('data/outputs/evaluation_metrics.csv', index=False)
+        logging.info('Evaluation metrics saved successfully')
 
-# Save metrics to CSV
-metrics_df = pd.DataFrame({
-    'Model': ['Linear Regression', 'Random Forest'],
-    'MSE': [mse_linear, mse_rf],
-    'R2': [r2_linear, r2_rf]
-})
-metrics_df.to_csv('data/outputs/metrics.csv', index=False)
-
-# Save metrics to CSV
-metrics_df = pd.DataFrame({
-    'Model': ['Random Forest'],
-    'MSE': [mse_rf],
-    'R2': [r2_rf]
-})
-metrics_df.to_csv('data/outputs/metrics.csv', index=False)
-
-# Plotting and saving charts
-plt.figure(figsize=(10, 5))
-
-# Plot for MSE
-plt.subplot(1, 2, 1)
-plt.bar(metrics_df['Model'], metrics_df['MSE'], color='blue')
-plt.title('Mean Squared Error')
-plt.xlabel('Model')
-plt.ylabel('MSE')
-
-# Plot for R2
-plt.subplot(1, 2, 2)
-plt.bar(metrics_df['Model'], metrics_df['R2'], color='green')
-plt.title('R-squared')
-plt.xlabel('Model')
-plt.ylabel('R2')
-
-# Save the plot
-plt.tight_layout()
-plt.savefig('data/outputs/model_performance.png')
+        return mse_rf, r2_rf
+    except Exception as e:
+        logging.error(f'Error during model evaluation: {e}')
+        raise
