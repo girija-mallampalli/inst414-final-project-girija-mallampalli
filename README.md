@@ -33,31 +33,7 @@ Save visualizations as PNG files for reporting and analysis.
 main.py: Main script to run the entire process (data cleaning, encoding, model training).
 requirements.txt: List of required Python packages.
 
-
-## Directory Structure
-bash
-Copy code
-project/
-│
-├── data/
-│   ├── raw/                # Raw data files
-│   ├── cleaned/            # Cleaned data files
-│   ├── logs/               # Log files for each part of the pipeline
-│   ├── outputs/            # Model outputs and evaluation metrics
-│   └── visualizations/     # Saved visualizations
-│
-├── scripts/
-│   ├── extract.py          # Data extraction script
-│   ├── transform.py        # Data transformation script
-│   ├── model.py            # Model training script
-│   ├── evaluate.py         # Model evaluation script
-│   └── visualizations.py   # Visualization script
-│
-├── requirements.txt        # Python dependencies
-├── README.md               # Project overview and instructions
-└── project.log             # General log file
-
-#### Getting Started
+### Getting Started
 Prerequisites
 Python 3.x
 Required Python libraries listed in requirements.txt.
@@ -69,25 +45,25 @@ Navigate to the project directory.
 Install the required Python packages using:
 pip install -r requirements.txt
 
-###### Run the extraction, transformation, and loading processes:
+#### Run the extraction, transformation, and loading processes:
 python scripts/extract.py
 python scripts/transform.py
 python scripts/load.py
 
-###### Train the model and evaluate its performance:
+#### Train the model and evaluate its performance:
 python scripts/model.py
 python scripts/evaluate.py
 
-###### Generate and save visualizations:
+#### Generate and save visualizations:
 python scripts/visualizations.py
 
-###### Results
+#### Results
 The project outputs include:
 Model Performance Metrics: Saved in data/outputs/metrics.csv.
 Visualizations: Saved in data/visualizations/ as PNG files.
 Logs: Detailed logs of each process are stored in data/logs/.
 
-###### Conclusion
+#### Conclusion
 By analyzing hospital quality metrics, this project provides insights into key factors affecting patient inflow and outflow. The results can help hospitals optimize their operations, leading to improved patient experiences and better resource management.
 
 License
