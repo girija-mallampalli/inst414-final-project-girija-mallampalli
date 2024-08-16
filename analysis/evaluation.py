@@ -4,11 +4,6 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error, r2_score
 import analysis.model
 
-#Linear Regression Model Evaluation:
-mse_lr = mean_squared_error(y_test, y_pred_lr)
-r2_lr = r2_score(y_test, y_pred_lr)
-
-print(f'Linear Regression MSE: {mse_lr}, R2: {r2_lr}')
 
 # Random Forest Regressor Model Evaluation:
 mse_rf = mean_squared_error(y_test, y_pred_rf)
@@ -28,19 +23,27 @@ metrics_df = pd.DataFrame({
 })
 metrics_df.to_csv('data/outputs/metrics.csv', index=False)
 
+# Save metrics to CSV
+metrics_df = pd.DataFrame({
+    'Model': ['Random Forest'],
+    'MSE': [mse_rf],
+    'R2': [r2_rf]
+})
+metrics_df.to_csv('data/outputs/metrics.csv', index=False)
+
 # Plotting and saving charts
 plt.figure(figsize=(10, 5))
 
 # Plot for MSE
 plt.subplot(1, 2, 1)
-plt.bar(metrics_df['Model'], metrics_df['MSE'])
+plt.bar(metrics_df['Model'], metrics_df['MSE'], color='blue')
 plt.title('Mean Squared Error')
 plt.xlabel('Model')
 plt.ylabel('MSE')
 
 # Plot for R2
 plt.subplot(1, 2, 2)
-plt.bar(metrics_df['Model'], metrics_df['R2'])
+plt.bar(metrics_df['Model'], metrics_df['R2'], color='green')
 plt.title('R-squared')
 plt.xlabel('Model')
 plt.ylabel('R2')
@@ -48,4 +51,3 @@ plt.ylabel('R2')
 # Save the plot
 plt.tight_layout()
 plt.savefig('data/outputs/model_performance.png')
-plt.show()
