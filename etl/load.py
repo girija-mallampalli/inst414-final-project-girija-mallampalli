@@ -1,7 +1,7 @@
 import os
 import logging
 import pandas as pd
-from data import extracted, transformed
+from data import transformed
 
 # Setting up logging for load.py
 logging.basicConfig(
