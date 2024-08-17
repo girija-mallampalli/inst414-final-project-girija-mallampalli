@@ -11,6 +11,18 @@ logging.basicConfig(filename='data/logs/model.log', level=logging.DEBUG,
                     format='%(asctime)s %(message)s')
 
 def model():
+     """
+    Trains a Random Forest Regressor model using the cleaned hospital data and saves the predictions.
+
+    Returns:
+        tuple: A tuple containing the trained Random Forest model (`rf_model`), 
+               the actual target values from the test set (`y_test`), 
+               and the predicted values (`y_pred_rf`).
+
+    Raises:
+        Exception: If any error occurs during the model training or saving process, 
+                   the error is logged, and the exception is re-raised.
+    """
     try:
         logging.info('Started model training')
         hosp_df_cleaned = pd.read_csv('data/loaded/hosp_df_cleaned.csv')
