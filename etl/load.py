@@ -11,6 +11,15 @@ logging.basicConfig(
 )
 
 def load_data(hosp_df_cleaned):
+      """
+    Loads the cleaned hospital data into a CSV file in the 'data/cleaned' directory.
+
+    Args:
+        hosp_df_cleaned (pd.DataFrame): The cleaned and transformed hospital data.
+
+    Raises:
+        Exception: If the data cannot be saved to a CSV, logs the error and re-raises the exception.
+    """
     try:
         logging.info('Started data loading')
         os.makedirs('data/loaded', exist_ok=True)
