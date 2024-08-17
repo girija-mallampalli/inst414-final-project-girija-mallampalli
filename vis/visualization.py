@@ -6,6 +6,12 @@ import matplotlib.pyplot as plt
 from data import outputs
 
 def visualize():
+    """
+    Generates and saves visualizations based on the cleaned hospital data.
+    
+    Raises:
+        Exception: If an error occurs during the loading of data, visualization creation, or saving of plots, the error is logged, and the exception is re-raised.
+    """
     try:
         logging.info('Started visualizations')
 
