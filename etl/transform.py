@@ -11,10 +11,7 @@ def transform():
   """
     Transforms the extracted hospital data by selecting specific columns, cleaning missing values,
     and encoding categorical variables.
-
-    Args:
-        hosp_df (pd.DataFrame): The raw hospital data extracted from the CSV.
-
+    
     Returns:
         pd.DataFrame: The cleaned and transformed hospital data.
 
