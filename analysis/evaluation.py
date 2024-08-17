@@ -9,6 +9,16 @@ logging.basicConfig(filename='data/logs/evaluate.log', level=logging.DEBUG,
                     format='%(asctime)s %(message)s')
 
 def evaluate():
+   """
+    Evaluates the performance of the Random Forest Regressor model using mean squared error (MSE) and R-squared (R2) metrics.
+    
+    Returns:
+        tuple: A tuple containing the Mean Squared Error (`mse_rf`) and R-squared (`r2_rf`) values.
+
+    Raises:
+        Exception: If any error occurs during the evaluation or saving process, 
+                   the error is logged, and the exception is re-raised.
+    """
     try:
         logging.info('Started model evaluation')
         predictions = pd.read_csv('data/model/rf_predictions.csv')
