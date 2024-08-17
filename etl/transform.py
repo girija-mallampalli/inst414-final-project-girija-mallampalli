@@ -8,14 +8,23 @@ logging.basicConfig(filename='data/logs/transform.log', level=logging.DEBUG,
                     format='%(asctime)s %(message)s')
 
 def transform():
+  """
+    Transforms the extracted hospital data by selecting specific columns, cleaning missing values,
+    and encoding categorical variables.
+
+    Args:
+        hosp_df (pd.DataFrame): The raw hospital data extracted from the CSV.
+
+    Returns:
+        pd.DataFrame: The cleaned and transformed hospital data.
+
+    Raises:
+        Exception: If there is an error during data transformation, logs the error and re-raises the exception.
+    """
     try:
         logging.info('Started data transformation')
         hosp_df = pd.read_csv('data/extracted/hosp_df.csv')
-        hosp_df_cleaned = hosp_df[['State', 'Readmission national comparison', 
-                                   'Patient experience national comparison', 
-                                   'Effectiveness of care national comparison', 
-                                   'Timeliness of care national comparison', 
-                                   'Efficient use of medical imaging national comparison']]
+        hosp_df_cleaned = hosp_df[['Readmission national comparison', 'Patient experience national comparison', 'Effectiveness of care national comparison', 'Timeliness of care national comparison', 'Efficient use of medical imaging national comparison']]
         hosp_df_cleaned = hosp_df_cleaned.replace('Not Available', pd.NA)
         hosp_df_cleaned = hosp_df_cleaned.dropna()
 
