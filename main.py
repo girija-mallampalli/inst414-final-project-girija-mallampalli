@@ -7,33 +7,24 @@ from visualizations import visualize
 
 def main():
     """
-    Orchestrates the entire data processing pipeline, including ETL (Extract, Transform, Load),
-    model training, evaluation, and visualization.
-
-    Raises:
-        Exception: If any step in the pipeline fails, an exception is logged and re-raised.
+    Orchestrates the entire data processing, model training, evaluation, and visualization pipeline.
+    
     """
     try:
-        logging.info('Started the main execution')
+        logging.info('Started the main function')
 
-        # ETL Process
-        hosp_df = extract()
-        hosp_df_cleaned = transform(hosp_df)
-        load(hosp_df_cleaned)
+        # Model training and saving predictions
+        rf_model, y_test, y_pred_rf = model()
 
-        # Model Training
-        model_results = train_random_forest(hosp_df_cleaned)
+        # Model evaluation and saving metrics
+        mse_rf, r2_rf = evaluate()
 
-        # Evaluation
-        evaluate(model_results)
-
-        # Visualization
+        # Generating and saving visualizations
         visualize()
 
-        logging.info('Main execution completed successfully')
-
+        logging.info('Main function completed successfully')
     except Exception as e:
-        logging.error(f'Error during main execution: {e}')
+        logging.error(f'Unexpected error in main function: {e}')
         raise
         
 if __name__ == '__main__':
